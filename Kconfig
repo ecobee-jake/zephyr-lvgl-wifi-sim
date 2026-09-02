@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: Apache-2.0
+
+# Our fake WiFi driver (src/net/wifi_fake_drv.c) is registered via
+# ETH_NET_DEVICE_INIT, which requires struct net_wifi_mgmt_offload.wifi_iface
+# to be shaped as struct ethernet_api (only the case when this is selected).
+config WIFI_USE_NATIVE_NETWORKING
+	default y if WIFI
+
+source "Kconfig.zephyr"

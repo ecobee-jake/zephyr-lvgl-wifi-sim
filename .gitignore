@@ -1,0 +1,39 @@
+# Zephyr / west build output
+build/
+build-*/
+*.map
+*.elf
+*.bin
+*.hex
+*.uf2
+
+# west workspace (this repo is an application/manifest repo; siblings
+# like zephyr/, modules/, bootloader/ are fetched by `west update`)
+/.west/
+/zephyr/
+/modules/
+/bootloader/
+/tools/
+/tools/net-tools/
+
+# west config
+west.yml.lock
+
+# CMake / Ninja
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+.ninja_log
+.ninja_deps
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
