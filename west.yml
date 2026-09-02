@@ -5,11 +5,11 @@ manifest:
 
   projects:
     - name: zephyr
-      remote: zephyrproject-rtos
-      revision: v4.4.2
+      url: https://github.com/jukkar/zephyr
+      revision: devel/wifi-driver-for-native_sim
       import:
-        name-allowlist:
-          - lvgl
+        name-allowlist: [lvgl, mbedtls, tf-psa-crypto, hostap, picolibc]
+
 
   self:
     path: lvgl-demo

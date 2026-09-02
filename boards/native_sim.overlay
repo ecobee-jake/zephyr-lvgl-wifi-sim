@@ -9,3 +9,11 @@
 	height = <900>;
 	width = <480>;
 };
+
+/ {
+	wifi0: wifi {
+		compatible = "zephyr,native-sim-wifi";
+		host-interface = "zwifi";
+		zephyr,random-mac-address;
+	};
+};
