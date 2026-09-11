@@ -21,6 +21,9 @@ struct wifi_sta_scan_entry {
 void wifi_sta_init(void);
 void wifi_sta_scan(void);
 
+/* Connects to the hardcoded WPA2 AP from scripts/bring-up-dev-iface.sh. */
+void wifi_sta_connect(void);
+
 /* Returns a pointer to the most recent scan results and their count. */
 size_t wifi_sta_get_scan_results(const struct wifi_sta_scan_entry **results);
 

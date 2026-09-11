@@ -94,6 +94,9 @@ static void ui_thread(void *p1, void *p2, void *p3)
 			case APP_EVENT_WIFI_SCAN_REQUEST:
 				wifi_sta_scan();
 				break;
+			case APP_EVENT_WIFI_CONNECT_REQUEST:
+				wifi_sta_connect();
+				break;
 			case APP_EVENT_WIFI_SCAN_DONE:
 				ui_handle_event(&evt);
 				break;

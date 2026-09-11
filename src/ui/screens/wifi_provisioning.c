@@ -19,6 +19,16 @@ static void scan_click_cb(lv_event_t *e)
 	app_event_post(APP_EVENT_WIFI_SCAN_REQUEST);
 }
 
+/* Credentials are hardcoded, so any row connects to the same AP. Carrying the
+ * pressed row's SSID would need a payload on struct app_event.
+ */
+static void network_click_cb(lv_event_t *e)
+{
+	(void)e;
+
+	app_event_post(APP_EVENT_WIFI_CONNECT_REQUEST);
+}
+
 static void back_click_cb(lv_event_t *e)
 {
 	(void)e;
@@ -58,6 +68,7 @@ lv_obj_t *screen_wifi_provisioning_create(void)
 	lv_obj_set_flex_align(screen, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
 	network_list = ui_list_create(screen, NULL, 0);
+	ui_list_set_item_click_cb(network_list, network_click_cb);
 	lv_obj_add_event_cb(screen, screen_delete_cb, LV_EVENT_DELETE, NULL);
 
 	lv_obj_t *scan_btn = ui_button_create(screen, "Scan");

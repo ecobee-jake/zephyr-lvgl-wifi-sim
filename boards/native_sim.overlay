@@ -13,7 +13,10 @@
 / {
 	wifi0: wifi {
 		compatible = "zephyr,native-sim-wifi";
-		host-interface = "wlp0s20f3";
+		/* hwsim STA from scripts/bring-up-dev-iface.sh. For the real card,
+		 * build with -DEXTRA_DTC_OVERLAY_FILE=overlays/real-card.overlay.
+		 */
+		host-interface = "zwifi";
 		zephyr,random-mac-address;
 	};
 };

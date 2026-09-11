@@ -1,0 +1,13 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Point the native_sim Wi-Fi driver at the real Intel card instead of the hwsim
+ * STA. Requires scripts/bring-up-real-iface.sh first (host Wi-Fi drops until
+ * scripts/clean-up-real-iface.sh runs).
+ *
+ *   ./scripts/build.sh -- -DEXTRA_DTC_OVERLAY_FILE=overlays/real-card.overlay
+ */
+
+&wifi0 {
+	host-interface = "wlp0s20f3";
+};

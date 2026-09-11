@@ -1,8 +1,8 @@
 #!/bin/sh
 # Host-side proof the interface scans real APs. No Zephyr involved.
-# Run: sudo ./scripts/test-real-scan.sh [iface]   (default zreal)
+# Run: sudo ./scripts/test-real-scan.sh [iface]   (default wlp0s20f3)
 set -u
-IFACE=${1:-zreal}; OUT=/tmp/real-scan.out
+IFACE=${1:-wlp0s20f3}; OUT=/tmp/real-scan.out
 [ "$(id -u)" -eq 0 ] || { echo "run with sudo"; exit 1; }
 ip link show "$IFACE" >/dev/null 2>&1 || { echo "FAIL: $IFACE missing"; exit 1; }
 ip link set "$IFACE" up
