@@ -1,0 +1,21 @@
+# Base manifest: plain upstream Zephyr, LVGL only, no Wi-Fi.
+#
+# This is the pin the LVGL sample this project started from used. Nothing here
+# supports the native_sim Wi-Fi driver - that lives on a fork, see west.yml.
+#
+# Select with: ./scripts/switch-zephyr.sh base
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.4.2
+      import:
+        name-allowlist:
+          - lvgl
+
+  self:
+    path: lvgl-demo

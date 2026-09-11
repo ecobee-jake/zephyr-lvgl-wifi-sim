@@ -6,12 +6,15 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/sys/util.h>
-#include <zephyr/net/dhcpv4.h>
-#include <zephyr/net/icmp.h>
-#include <zephyr/net/net_ip.h>
 
 #include "wifi-sta.h"
 #include "../app_events.h"
+
+#if defined(CONFIG_WIFI)
+
+#include <zephyr/net/dhcpv4.h>
+#include <zephyr/net/icmp.h>
+#include <zephyr/net/net_ip.h>
 
 /* Hardcoded AP from scripts/bring-up-dev-iface.sh (same creds as zephyr's
  * tests/net/wifi/interop). Upstream is proved by pinging past the NAT.
@@ -234,3 +237,21 @@ size_t wifi_sta_get_scan_results(const struct wifi_sta_scan_entry **results)
     *results = scan_results;
     return scan_result_count;
 }
+
+#else /* !CONFIG_WIFI */
+
+/* Base build: no Wi-Fi stack to talk to. The provisioning screen still builds and
+ * opens, its scan list just stays empty.
+ */
+void wifi_sta_init(void) { }
+void wifi_sta_scan(void) { }
+void wifi_sta_connect(void) { }
+void wifi_sta_handle_event(const struct app_event *evt) { ARG_UNUSED(evt); }
+
+size_t wifi_sta_get_scan_results(const struct wifi_sta_scan_entry **results)
+{
+    *results = NULL;
+    return 0;
+}
+
+#endif /* CONFIG_WIFI */

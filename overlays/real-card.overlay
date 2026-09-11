@@ -1,13 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Point the native_sim Wi-Fi driver at the real Intel card instead of the hwsim
- * STA. Requires scripts/bring-up-real-iface.sh first (host Wi-Fi drops until
- * scripts/clean-up-real-iface.sh runs).
+ * Point the native_sim Wi-Fi driver at the real Intel card. Scanning real APs
+ * works; connecting does not. Your host Wi-Fi drops for the duration, because
+ * phy0 allows only one managed interface and Zephyr takes it.
  *
- *   ./scripts/build.sh -- -DEXTRA_DTC_OVERLAY_FILE=overlays/real-card.overlay
+ * Requires scripts/bring-up-real-iface.sh first (and clean-up after), plus the
+ * Wi-Fi fork (./scripts/switch-zephyr.sh wifi).
+ *
+ * Declares the node rather than patching &wifi0: the base overlay no longer has
+ * one, so this and dev-iface.overlay are standalone alternatives.
+ *
+ *   ./scripts/build-and-run.sh -p -b native_sim -- \
+ *       -DEXTRA_DTC_OVERLAY_FILE=overlays/real-card.overlay \
+ *       -DEXTRA_CONF_FILE=overlays/wifi.conf
  */
 
-&wifi0 {
-	host-interface = "wlp0s20f3";
+/ {
+	wifi0: wifi {
+		compatible = "zephyr,native-sim-wifi";
+		host-interface = "wlp0s20f3";
+		zephyr,random-mac-address;
+	};
 };

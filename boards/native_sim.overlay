@@ -4,19 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* Base build: display only. The Wi-Fi node lives in overlays/dev-iface.overlay
+ * or overlays/real-card.overlay, neither of which builds on upstream Zephyr.
+ */
+
 &sdl_dc {
 	compatible = "zephyr,sdl-dc";
 	height = <900>;
 	width = <480>;
-};
-
-/ {
-	wifi0: wifi {
-		compatible = "zephyr,native-sim-wifi";
-		/* hwsim STA from scripts/bring-up-dev-iface.sh. For the real card,
-		 * build with -DEXTRA_DTC_OVERLAY_FILE=overlays/real-card.overlay.
-		 */
-		host-interface = "zwifi";
-		zephyr,random-mac-address;
-	};
 };

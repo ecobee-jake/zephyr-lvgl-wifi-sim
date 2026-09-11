@@ -6,15 +6,25 @@
 #define APP_WIFI_STA_H_
 
 #include <stddef.h>
+#include <stdint.h>
 
+/* The base build has no networking at all, so the net headers are not includable.
+ * The API shape stays identical either way, which keeps the UI, the router and
+ * main.c free of conditionals - they just call no-ops and get zero results.
+ */
+#if defined(CONFIG_WIFI)
 #include <zephyr/net/net_if.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/wifi_mgmt.h>
+#define WIFI_STA_SSID_MAX_LEN WIFI_SSID_MAX_LEN
+#else
+#define WIFI_STA_SSID_MAX_LEN 32
+#endif
 
 #define WIFI_STA_SCAN_MAX_RESULTS 32
 
 struct wifi_sta_scan_entry {
-	char ssid[WIFI_SSID_MAX_LEN + 1];
+	char ssid[WIFI_STA_SSID_MAX_LEN + 1];
 	int8_t rssi;
 };
 

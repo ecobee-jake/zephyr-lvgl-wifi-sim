@@ -1,0 +1,21 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Point the native_sim Wi-Fi driver at the hwsim STA. Fully simulated: scan,
+ * WPA2 connect, DHCP and upstream ping all work, and your real Wi-Fi is untouched.
+ *
+ * Requires scripts/bring-up-dev-iface.sh first, and the Wi-Fi fork
+ * (./scripts/switch-zephyr.sh wifi).
+ *
+ *   ./scripts/build-and-run.sh -p -b native_sim -- \
+ *       -DEXTRA_DTC_OVERLAY_FILE=overlays/dev-iface.overlay \
+ *       -DEXTRA_CONF_FILE=overlays/wifi.conf
+ */
+
+/ {
+	wifi0: wifi {
+		compatible = "zephyr,native-sim-wifi";
+		host-interface = "zwifi";
+		zephyr,random-mac-address;
+	};
+};

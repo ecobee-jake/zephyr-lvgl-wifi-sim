@@ -1,3 +1,7 @@
+# Wi-Fi manifest: jukkar's fork, which carries the native_sim Wi-Fi driver
+# (PR #110681) that upstream does not have yet. hostap is the supplicant.
+#
+# Select with: ./scripts/switch-zephyr.sh wifi   (see west-base.yml for the other)
 manifest:
   remotes:
     - name: zephyrproject-rtos

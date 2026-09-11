@@ -10,6 +10,7 @@
 #include "app_events.h"
 #include "ui/ui.h"
 #include "net/wifi-sta.h"
+#include "diag/heap-monitor.h"
 
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
 #include <zephyr/logging/log.h>
@@ -84,6 +85,7 @@ static void ui_thread(void *p1, void *p2, void *p3)
 			switch (evt.id)
 			{
 			case APP_EVENT_TICK:
+				heap_monitor_on_tick();
 				break;
 			case APP_EVENT_GOTO_HOME:
 				ui_handle_event(&evt);
@@ -120,6 +122,7 @@ K_THREAD_DEFINE(event_producer_tid, EVENT_PRODUCER_STACK_SIZE, event_producer_th
 
 int main(void)
 {
+	heap_monitor_init();
 	wifi_sta_init();
 
 	return 0;
