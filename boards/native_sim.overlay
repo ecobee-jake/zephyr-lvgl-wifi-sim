@@ -13,7 +13,7 @@
 / {
 	wifi0: wifi {
 		compatible = "zephyr,native-sim-wifi";
-		host-interface = "zwifi";
+		host-interface = "wlp0s20f3";
 		zephyr,random-mac-address;
 	};
 };

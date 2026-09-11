@@ -6,14 +6,11 @@
 
 #include "wifi_provisioning.h"
 #include "../../app_events.h"
+#include "../../net/wifi-sta.h"
 #include "../components/button.h"
 #include "../components/list.h"
 
-static const char *networks[] = {
-	"Home-WiFi",
-	"Office-5G",
-	"Guest",
-};
+static lv_obj_t *network_list;
 
 static void scan_click_cb(lv_event_t *e)
 {
@@ -29,6 +26,30 @@ static void back_click_cb(lv_event_t *e)
 	app_event_post(APP_EVENT_GOTO_HOME);
 }
 
+static void screen_delete_cb(lv_event_t *e)
+{
+	(void)e;
+
+	network_list = NULL;
+}
+
+void screen_wifi_provisioning_refresh_scan_results(void)
+{
+	const struct wifi_sta_scan_entry *results;
+	size_t count = wifi_sta_get_scan_results(&results);
+	const char *names[WIFI_STA_SCAN_MAX_RESULTS];
+
+	if (network_list == NULL) {
+		return;
+	}
+
+	for (size_t i = 0; i < count; i++) {
+		names[i] = results[i].ssid[0] != '\0' ? results[i].ssid : "(Hidden Network)";
+	}
+
+	ui_list_set_items(network_list, names, count);
+}
+
 lv_obj_t *screen_wifi_provisioning_create(void)
 {
 	lv_obj_t *screen = lv_obj_create(NULL);
@@ -36,7 +57,8 @@ lv_obj_t *screen_wifi_provisioning_create(void)
 	lv_obj_set_flex_flow(screen, LV_FLEX_FLOW_COLUMN);
 	lv_obj_set_flex_align(screen, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
-	ui_list_create(screen, networks, ARRAY_SIZE(networks));
+	network_list = ui_list_create(screen, NULL, 0);
+	lv_obj_add_event_cb(screen, screen_delete_cb, LV_EVENT_DELETE, NULL);
 
 	lv_obj_t *scan_btn = ui_button_create(screen, "Scan");
 
