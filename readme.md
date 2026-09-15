@@ -10,7 +10,7 @@ Pick any empty dir as the west workspace; the repo is cloned *inside* it.
 
 `pip install west`
 
-`west init -l lvgl-demo          # makes lvgl-demo the manifest repo`
+`west init -l zephyr-lvgl-wifi-sim          # makes zephyr-lvgl-wifi-sim the manifest repo`
 
 `west update                     # clones zephyr/ and modules/ as siblings`
 
